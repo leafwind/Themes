@@ -1,6 +1,16 @@
 #!/bin/bash
 # patch-dawn-theme.sh
-# 直接 patch 原始主題，套用所有客製化
+#
+# 把站台對 dawn 的客製化以 sed / printf 重新套到 packages/dawn 上。這支是那幾項
+# 客製化的可執行定義,不是拿來手動改主題、也不是部署工具。
+#
+# 什麼時候跑:
+#   - 追上游後 merge / rebase 卡衝突(通常是 content.hbs,上游常重構那塊):
+#     對衝突檔 git checkout --theirs 取上游版,再跑這支把客製化套回新結構。
+#   - 客製化被改壞:git reset --hard upstream/main 後跑這支回到乾淨狀態。
+#
+# 跑完 git diff upstream/main --stat 應只剩客製化 + 這支腳本。接著 commit、push,
+# 再到 VPS 用 ghost-ops 的 deploy-theme.sh 部署。
 
 set -e
 
@@ -40,4 +50,4 @@ sed -i '' 's/padding-bottom: 50%;/padding-bottom: 66.666%;/' \
 sed -i '' 's/\.u-placeholder\.horizontal:before{padding-bottom:50%}/.u-placeholder.horizontal:before{padding-bottom:66.666%}/' \
     "$DAWN_DIR/assets/built/screen.css"
 
-echo ">>> 完成！記得到後台重新啟用 dawn-custom 主題。"
+echo ">>> 完成"
