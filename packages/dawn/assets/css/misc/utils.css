@@ -20,7 +20,8 @@
 }
 
 .u-placeholder.horizontal::before {
-    padding-bottom: 50%;
+    /* 客製：橫式縮圖框固定為 3:2（原 2:1）。精選文章輪播與標籤頁頭圖共用 */
+    padding-bottom: 66.666%;
 }
 
 .u-placeholder.rectangle::before {
